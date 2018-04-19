@@ -12,9 +12,9 @@ public interface AssignmentService {
 	
 	AssignmentDTO getAssignmentById(Long id);
 	
-	Assignment saveAssignment(AssignmentDTO assignmentDTO, Long lab_id);
+	AssignmentDTO saveAssignment(AssignmentDTO assignmentDTO, Long lab_id);
 	
-	Assignment updateAssignment(Long id, Long laboratory_id, AssignmentDTO assignemntDTO);
+	AssignmentDTO updateAssignment(Long id, Long laboratory_id, AssignmentDTO assignemntDTO);
 	
 	void deleteById(Long id);
 }

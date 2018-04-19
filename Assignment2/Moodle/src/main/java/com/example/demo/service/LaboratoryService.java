@@ -17,9 +17,9 @@ public interface LaboratoryService {
 	
 	LaboratoryDTO getLaboratoryByDate(Date date);
 	
-	Laboratory saveLaboratory(LaboratoryDTO labDTO);
+	LaboratoryDTO saveLaboratory(LaboratoryDTO labDTO);
 	
-	Laboratory updateLaboratory(Long id, LaboratoryDTO labDTO);
+	LaboratoryDTO updateLaboratory(Long id, LaboratoryDTO labDTO);
 	
 	void deleteLaboratoryById(Long id);
 }

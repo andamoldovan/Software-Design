@@ -15,12 +15,12 @@ public interface StudentService {
 	
 	StudentDTO getStudentByEmailAndPassword(String email, String password);
 	
-	Student saveStudent(StudentDTO studentDTO);
+	StudentDTO saveStudent(StudentDTO studentDTO);
 	
 	StudentDTO updateStudent(String email, StudentDTO studentDTO);
 	
 	void deleteStudent(Long id);
 	
-	Student firstLogIn(String email, String token, StudentDTO studentDTO);
+	StudentDTO firstLogIn(String email, String token, StudentDTO studentDTO);
 	
 }

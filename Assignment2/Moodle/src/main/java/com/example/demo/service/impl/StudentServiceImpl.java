@@ -60,7 +60,7 @@ public class StudentServiceImpl implements StudentService{
 	}
 
 	@Override
-	public Student saveStudent(StudentDTO studentDTO) {
+	public StudentDTO saveStudent(StudentDTO studentDTO) {
 		Student toBeSaved = new Student();
 		//toBeSaved.setStudentId(studentDTO.getStudentId());
 		toBeSaved.setEmail(studentDTO.getEmail());
@@ -78,7 +78,7 @@ public class StudentServiceImpl implements StudentService{
 			e.printStackTrace();
 			return null;
 		}
-		return toBeSaved;
+		return transform(toBeSaved);
 	}
 		
 
@@ -110,7 +110,7 @@ public class StudentServiceImpl implements StudentService{
 	}
     
 	@Override
-	public Student firstLogIn(String email, String token, StudentDTO studentDTO) {
+	public StudentDTO firstLogIn(String email, String token, StudentDTO studentDTO) {
 		Student student = studentDAO.findByEmail(email);
 		student.setFullName(studentDTO.getFullName());
 		student.setGroup(studentDTO.getGroup());
@@ -121,7 +121,7 @@ public class StudentServiceImpl implements StudentService{
 		
 		try {
 			if(student.getToken().equals(token)) {
-				return studentDAO.save(student);
+				return transform(studentDAO.save(student));
 			}
 			else return null;
 		}catch(Exception e) {

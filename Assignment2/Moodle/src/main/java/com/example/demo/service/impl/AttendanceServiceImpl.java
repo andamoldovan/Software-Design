@@ -90,7 +90,7 @@ public class AttendanceServiceImpl implements AttendanceService{
 	}
 
 	@Override
-	public Attendance saveAttendance(Long studentId, Long laboratoryId) {
+	public AttendanceDTO saveAttendance(Long studentId, Long laboratoryId) {
 		Student stu = studentDAO.getOne(studentId);
 		Laboratory lab = laboratoryDAO.getOne(laboratoryId);
 		
@@ -102,7 +102,7 @@ public class AttendanceServiceImpl implements AttendanceService{
 		try {
 			studentDAO.save(stu);
 			laboratoryDAO.save(lab);
-			return attendanceDAO.save(attendance);
+			return transform(attendanceDAO.save(attendance));
 		}catch(Exception e) {
 			e.printStackTrace();
 			return null;
@@ -110,7 +110,7 @@ public class AttendanceServiceImpl implements AttendanceService{
 	}
 
 	@Override
-	public Attendance updateAttendance(Long id, Long studentId, Long laboratoryId) {
+	public AttendanceDTO updateAttendance(Long id, Long studentId, Long laboratoryId) {
 		Student stu = studentDAO.getOne(studentId);
 		Laboratory lab = laboratoryDAO.getOne(laboratoryId);
 		Attendance att = attendanceDAO.getOne(id);
@@ -119,7 +119,7 @@ public class AttendanceServiceImpl implements AttendanceService{
 		
 		
 		try {
-			return attendanceDAO.save(att);
+			return transform(attendanceDAO.save(att));
 		}catch(Exception e){
 			e.printStackTrace();
 			return null;
@@ -154,6 +154,23 @@ public class AttendanceServiceImpl implements AttendanceService{
 			attendance.add(dto);
 		}
 		return attendance;
+	}
+	
+	private AttendanceDTO transform(Attendance a) {
+		AttendanceDTO dto = new AttendanceDTO();
+		Student s = a.getStudent();
+		Laboratory l = a.getLaboratory();
+		StudentDTO student = new StudentDTO(s.getEmail(), s.getGroup(), s.getHobby(), s.getFullName(), s.getPassword());
+		student.setId(s.getStudentId());
+		LaboratoryDTO lab = new LaboratoryDTO(l.getNumber(), l.getDate(), l.getTitle(), l.getCurricula(), l.getDescription());
+		lab.setId(l.getId());
+		
+		dto.setStudentDTO(student);
+		dto.setLaboratoryDTO(lab);
+		dto.setId(a.getId());
+		
+		return dto;
+		
 	}
 	
 }

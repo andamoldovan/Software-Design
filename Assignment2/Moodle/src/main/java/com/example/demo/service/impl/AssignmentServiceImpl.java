@@ -67,12 +67,12 @@ public class AssignmentServiceImpl implements AssignmentService{
 	}
 
 	@Override
-	public Assignment saveAssignment(AssignmentDTO assignmentDTO, Long lab_id) {
+	public AssignmentDTO saveAssignment(AssignmentDTO assignmentDTO, Long lab_id) {
 		try {
 			Laboratory laboratory = laboratoryDAO.getOne(lab_id);
 			//Laboratory laboratory  = new Laboratory(labDTO.getNumber(), labDTO.getDate(), labDTO.getTitle(), labDTO.getCurricula(), labDTO.getDescription());
 			Assignment a = new Assignment(assignmentDTO.getName(), assignmentDTO.getDescription(), assignmentDTO.getDate(), laboratory);
-			return assignmentDAO.save(a);
+			return transform(assignmentDAO.save(a));
 		}catch(Exception e) {
 			e.printStackTrace();
 			return null;
@@ -80,7 +80,7 @@ public class AssignmentServiceImpl implements AssignmentService{
 	}
 
 	@Override
-	public Assignment updateAssignment(Long id, Long laboraotry_id, AssignmentDTO assignmentDTO) {
+	public AssignmentDTO updateAssignment(Long id, Long laboraotry_id, AssignmentDTO assignmentDTO) {
 		Assignment a = new Assignment();
 		Laboratory l = new Laboratory();
 		try {
@@ -93,7 +93,7 @@ public class AssignmentServiceImpl implements AssignmentService{
 			a.setDate(assignmentDTO.getDate());
 			a.setLaboratoryIdentifier(l);
 			
-			return a;
+			return transform(a);
 		}catch(Exception e) {
 			e.printStackTrace();
 			return null;
@@ -129,6 +129,19 @@ public class AssignmentServiceImpl implements AssignmentService{
 		}
 		return result;
 	}
-
+	
+	private AssignmentDTO transform(Assignment assignment) {
+		AssignmentDTO result = new AssignmentDTO();
+		Laboratory l = assignment.getLaboratoryIdentifier();
+		LaboratoryDTO lab = new LaboratoryDTO(l.getNumber(), l.getDate(), l.getTitle(), l.getCurricula(), l.getDescription());
+		lab.setId(l.getId());
+		result.setId(assignment.getId());
+		result.setDate(assignment.getDate());
+		result.setDescription(assignment.getDescription());
+		result.setLaboratoryDTO(lab);
+		result.setName(assignment.getName());
+		
+		return result;
+	}
 	
 }

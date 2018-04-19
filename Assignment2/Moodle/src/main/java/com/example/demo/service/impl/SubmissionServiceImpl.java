@@ -48,9 +48,9 @@ public class SubmissionServiceImpl implements SubmissionService{
 	}
 
 	@Override
-	public Submission saveSubmission(SubmissionDTO submissionDTO) {
+	public SubmissionDTO saveSubmission(SubmissionDTO submissionDTO) {
 		try {
-			return submissionDAO.save(transform(submissionDTO));
+			return transform(submissionDAO.save(transform(submissionDTO)));
 		}catch(Exception e) {
 			e.printStackTrace();
 			return null;
@@ -58,7 +58,7 @@ public class SubmissionServiceImpl implements SubmissionService{
 	}
 
 	@Override
-	public Submission updateAssignment(Long id, SubmissionDTO submissionDTO) {
+	public SubmissionDTO updateAssignment(Long id, SubmissionDTO submissionDTO) {
 		Submission submission = submissionDAO.getOne(id);
 		Submission subb = transform(submissionDTO);
 		submission.setAssignmentReff(subb.getAssignmentReff());
@@ -66,7 +66,7 @@ public class SubmissionServiceImpl implements SubmissionService{
 		submission.setNote(subb.getNote());
 		submission.setStudentReff(subb.getStudentReff());
 		try {
-			return submissionDAO.save(submission);
+			return transform(submissionDAO.save(submission));
 		}catch(Exception e) {
 			e.printStackTrace();
 			return null;

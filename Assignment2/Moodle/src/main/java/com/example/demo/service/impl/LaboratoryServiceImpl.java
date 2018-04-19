@@ -81,11 +81,11 @@ public class LaboratoryServiceImpl implements LaboratoryService{
 	}
 
 	@Override
-	public Laboratory saveLaboratory(LaboratoryDTO labDTO) {
+	public LaboratoryDTO saveLaboratory(LaboratoryDTO labDTO) {
 		Laboratory laboratory  = new Laboratory(labDTO.getNumber(), labDTO.getDate(), labDTO.getTitle(), labDTO.getCurricula(), labDTO.getDescription());
 		
 		try {
-			return laboratoryDAO.save(laboratory);
+			return transform(laboratoryDAO.save(laboratory));
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
@@ -93,7 +93,7 @@ public class LaboratoryServiceImpl implements LaboratoryService{
 	}
 
 	@Override
-	public Laboratory updateLaboratory(Long id, LaboratoryDTO labDTO) {
+	public LaboratoryDTO updateLaboratory(Long id, LaboratoryDTO labDTO) {
 		Laboratory laboratory = laboratoryDAO.getOne(id);
 		
 		try {
@@ -103,7 +103,7 @@ public class LaboratoryServiceImpl implements LaboratoryService{
 			laboratory.setDescription(labDTO.getDescription());
 			laboratory.setCurricula(labDTO.getCurricula());
 			
-			return laboratoryDAO.save(laboratory);
+			return transform(laboratoryDAO.save(laboratory));
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
@@ -125,6 +125,12 @@ public class LaboratoryServiceImpl implements LaboratoryService{
 		}
 		return laboratories;
 	}
-
+	
+	
+	private LaboratoryDTO transform(Laboratory l) {
+		LaboratoryDTO laboratoryDTO =  new LaboratoryDTO(l.getNumber(), l.getDate(), l.getTitle(), l.getCurricula(), l.getDescription());
+		laboratoryDTO.setId(l.getId());
+		return laboratoryDTO;
+	}
 	
 }

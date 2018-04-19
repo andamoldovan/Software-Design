@@ -10,9 +10,9 @@ public interface SubmissionService {
 	
 	SubmissionDTO getSubmissionById(Long id);
 	
-	Submission saveSubmission(SubmissionDTO submissionDTO);
+	SubmissionDTO saveSubmission(SubmissionDTO submissionDTO);
 	
-	Submission updateAssignment(Long id, SubmissionDTO SubmissionDTO);
+	SubmissionDTO updateAssignment(Long id, SubmissionDTO SubmissionDTO);
 	
 	void deleteById(Long id);
 }

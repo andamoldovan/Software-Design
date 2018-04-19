@@ -31,21 +31,12 @@ public class StudentController {
         this.studentService = studentService;
     }
 
-//    @GetMapping()
-//    public String getAllStudents() {
-//        try {
-//            return studentService.getAllStudents().toString();
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//            return null;
-//        }
-//    }
     
     @GetMapping(value = "/{id}")
     @ResponseBody
-    public String getStudentById(@RequestParam("id") Long id) {
+    public StudentDTO getStudentById(@RequestParam("id") Long id) {
     	try {
-    		return studentService.getStudentById(id).toString();
+    		return studentService.getStudentById(id);
     	}catch(Exception e) {
     		e.printStackTrace();
     		return null;
@@ -54,39 +45,37 @@ public class StudentController {
     
     @GetMapping(value = "/{email}")
     @ResponseBody
-    public String getStudentByEmail(@RequestParam("email") String email) {
-    	StudentDTO student;
+    public StudentDTO getStudentByEmail(@RequestParam("email") String email) {
     	try {
-    		student = studentService.getStudentByEmail(email);
+    		return studentService.getStudentByEmail(email);
     	}catch(Exception e) {
     		e.printStackTrace();
     		return null;
     	}
-    	return student.toString();
     }
     
     
     @GetMapping()
     @ResponseBody
-    public String getStudentByEmailAndPassword(@RequestParam("email") String email, @RequestParam("password") String password) {
+    public StudentDTO getStudentByEmailAndPassword(@RequestParam("email") String email, @RequestParam("password") String password) {
     	try {
-    		return studentService.getStudentByEmailAndPassword(email, password).toString();
+    		return studentService.getStudentByEmailAndPassword(email, password);
     	}catch(Exception e) {
     		e.printStackTrace();
-    		return "Invalid email or password";
+    		return null;
     	}
     }
     
     @PostMapping()
     @ResponseBody
-    public String createStudent(@RequestParam("email") String email) {
+    public StudentDTO createStudent(@RequestParam("email") String email) {
     	StudentDTO s = studentService.getStudentByEmail(email);
     	try {
     		if(s == null) {
 	    		StudentDTO student = new StudentDTO(email, 0, " ", " ", " ");
 	    		student.setToken();
 	    		if(student != null)
-	    			return studentService.saveStudent(student).toString();
+	    			return studentService.saveStudent(student);
 	    		else return null;
     		}else
     			return null;
@@ -99,8 +88,8 @@ public class StudentController {
     
     @PutMapping(value = "/{token}")
     @ResponseBody
-    public Student firstLogIn(@RequestParam("email") String email, @RequestParam("token") String token, @RequestParam("fullName") String  fullName, @RequestParam("group") int group, @RequestParam("hobby") String hobby, @RequestParam("password") String password) {
-    	Student student;
+    public StudentDTO firstLogIn(@RequestParam("email") String email, @RequestParam("token") String token, @RequestParam("fullName") String  fullName, @RequestParam("group") int group, @RequestParam("hobby") String hobby, @RequestParam("password") String password) {
+    	StudentDTO student;
     	StudentDTO s = new StudentDTO(email, group, hobby, fullName, password);
     	try {
     		student = studentService.firstLogIn(email, token, s);
@@ -113,7 +102,7 @@ public class StudentController {
     
     @PutMapping()
     @ResponseBody
-    public String updateStudent(@RequestParam("id") Long id, @RequestParam("email") String email, @RequestParam("fullName")  String fullName, @RequestParam("group") int group, @RequestParam("hobby") String hobby, @RequestParam("password") String password) {
+    public StudentDTO updateStudent(@RequestParam("id") Long id, @RequestParam("email") String email, @RequestParam("fullName")  String fullName, @RequestParam("group") int group, @RequestParam("hobby") String hobby, @RequestParam("password") String password) {
     	StudentDTO student = studentService.getStudentById(id);
     	student.setEmail(email);
     	student.setFullName(fullName);
@@ -122,7 +111,7 @@ public class StudentController {
     	student.setPassword(password);
     	
     	try {
-    		return studentService.updateStudent(email, student).toString();
+    		return studentService.updateStudent(email, student);
     	}catch(Exception e) {
     		e.printStackTrace();
     		return null;

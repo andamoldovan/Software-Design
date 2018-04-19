@@ -39,9 +39,9 @@ public class GradeController {
 	
 	@GetMapping(value = "/{id}")
 	@ResponseBody
-	public String getGradeById(@RequestParam("id") Long grade_id) {
+	public GradeDTO getGradeById(@RequestParam("id") Long grade_id) {
 		try {
-			return gradeService.getGradeById(grade_id).toString();
+			return gradeService.getGradeById(grade_id);
 		}catch(Exception e) {
 			e.printStackTrace();
 			return null;
@@ -50,10 +50,10 @@ public class GradeController {
 	
 	@GetMapping(value = "/{assignmentid}")
 	@ResponseBody
-	public String getGradeByAssignment(@RequestParam("assignmentId") Long assignment_id){
+	public List<GradeDTO> getGradeByAssignment(@RequestParam("assignmentId") Long assignment_id){
 		AssignmentDTO assignmentDTO = assignmentService.getAssignmentById(assignment_id);
 		try {
-			return gradeService.getGradeByAssignment(assignmentDTO).toString();
+			return gradeService.getGradeByAssignment(assignmentDTO);
 		}catch(Exception e) {
 			e.printStackTrace();
 			return null;
@@ -61,23 +61,22 @@ public class GradeController {
 	}
 	
 	@PostMapping()
-	public String createGrade(@RequestParam("studentId") Long student_id, @RequestParam("AssignmentId") Long assignment_id, @RequestParam("grade") int grade) {
+	public GradeDTO createGrade(@RequestParam("studentId") Long student_id, @RequestParam("AssignmentId") Long assignment_id, @RequestParam("grade") int grade) {
 		StudentDTO student = studentService.getStudentById(student_id);
 		AssignmentDTO assignment = assignmentService.getAssignmentById(assignment_id);
 		GradeDTO gradeDTO = new GradeDTO(1, grade);
 		gradeDTO.setAssignment(assignment);
 		gradeDTO.setStudent(student);
 		try {
-			gradeService.saveGrade(gradeDTO);
-			return "Grade created for student_id = " + student_id + " and assignment_id = " + assignment_id;
+			return gradeService.saveGrade(gradeDTO);
 		}catch(Exception e) {
 			e.printStackTrace();
-			return "Could not create the grade for student_id = " + student_id + " and assignment_id = " + assignment_id;
+			return null;
 		}
 	}
 	
 	@PutMapping()
-	public String updateGrade(@RequestParam("id") Long grade_id, @RequestParam("studentId") Long student_id, @RequestParam("assignmentId") Long assignment_id, @RequestParam("grade") int grade) {
+	public GradeDTO updateGrade(@RequestParam("id") Long grade_id, @RequestParam("studentId") Long student_id, @RequestParam("assignmentId") Long assignment_id, @RequestParam("grade") int grade) {
 		StudentDTO student = studentService.getStudentById(student_id);
 		AssignmentDTO assignment = assignmentService.getAssignmentById(assignment_id);
 		GradeDTO gradeDTO = gradeService.getGradeById(grade_id);
@@ -87,14 +86,13 @@ public class GradeController {
 				gradeDTO.setAssignment(assignment);
 				gradeDTO.setStudent(student);
 				gradeDTO.setTimesSumbitted(gradeDTO.getTimesSumbitted()+1);
-				gradeService.updateGrade(grade_id, gradeDTO);
-				return "Grade at id = " + grade_id + " was updated succesfully";
+				return gradeService.updateGrade(grade_id, gradeDTO);
 			}else {
-				return "Maximun number of attempts for grade at id = " + grade_id + " was reached";
+				return null;
 			}
 		}catch(Exception e) {
 			e.printStackTrace();
-			return "Grade at id = " + grade_id + "could not be updated";
+			return null;
 		}
 	}
 	

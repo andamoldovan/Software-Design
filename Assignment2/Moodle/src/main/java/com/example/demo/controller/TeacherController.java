@@ -30,45 +30,45 @@ public class TeacherController {
 	
 	@GetMapping(value="/{id}")
 	@ResponseBody
-	public String getTeacherById(@PathVariable("id") Long id) {
+	public TeacherDTO getTeacherById(@PathVariable("id") Long id) {
 		try {
-			return teacherService.getTeacherById(id).toString();
+			return teacherService.getTeacherById(id);
 		}catch(Exception e) {
 			e.printStackTrace();
-			return "Teacher at id = " + id + " could not be retrieved";
+			return null;
 		}
 	}
 	
 	@GetMapping()
 	@ResponseBody
-	public String getTeacherByEmailAndPassword(@RequestParam("email") String email, @RequestParam("password") String password) {
+	public TeacherDTO getTeacherByEmailAndPassword(@RequestParam("email") String email, @RequestParam("password") String password) {
 		try {
-			return teacherService.getTeacherByEmailAndPassword(email, password).toString();
+			return teacherService.getTeacherByEmailAndPassword(email, password);
 		}catch(Exception e) {
 			e.printStackTrace();
-			return "Email or password incorrect";
+			return null;
 		}
 	}
 	
 	@PostMapping()
-	public String createTeacher(@RequestParam("email") String email, @RequestParam("password") String password) {
+	public TeacherDTO createTeacher(@RequestParam("email") String email, @RequestParam("password") String password) {
 		TeacherDTO teacherDTO = new TeacherDTO(email, password);
 		try {
-			return teacherService.saveTeacher(teacherDTO).toString();
+			return teacherService.saveTeacher(teacherDTO);
 		}catch(Exception e) {
 			e.printStackTrace();
-			return "Teacher could not be saved";
+			return null;
 		}
 	}
 	
 	@PutMapping()
-	public String updateTeacher(@RequestParam("id") Long id, @RequestParam("email") String email, @RequestParam("password") String password) {
+	public TeacherDTO updateTeacher(@RequestParam("id") Long id, @RequestParam("email") String email, @RequestParam("password") String password) {
 		TeacherDTO teacherDTO = new TeacherDTO(email, password);
 		try {
-			return teacherService.updateTeacher(id, teacherDTO).toString();
+			return teacherService.updateTeacher(id, teacherDTO);
 		}catch(Exception e) {
 			e.printStackTrace();
-			return "Teacher at id = " + id + " does not exist";
+			return null;
 		}
 	}
 	

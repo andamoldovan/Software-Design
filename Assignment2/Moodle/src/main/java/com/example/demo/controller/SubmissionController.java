@@ -48,7 +48,7 @@ public class SubmissionController {
 	}
 	
 	@PostMapping()
-	public String saveSubmission(@RequestParam("studentid") Long studnet_id, @RequestParam("assignmentid") Long assignment_id, @RequestParam("gitrepository") String git_repo, @RequestParam("note") String note) {
+	public SubmissionDTO saveSubmission(@RequestParam("studentid") Long studnet_id, @RequestParam("assignmentid") Long assignment_id, @RequestParam("gitrepository") String git_repo, @RequestParam("note") String note) {
 		StudentDTO student = studentService.getStudentById(studnet_id);
 		student.setId(studnet_id);
 		AssignmentDTO assignment = assignmentService.getAssignmentById(assignment_id);
@@ -56,26 +56,26 @@ public class SubmissionController {
 		SubmissionDTO sub = new SubmissionDTO(student, assignment, git_repo, note);
 		
 		try {
-			return submissionService.saveSubmission(sub).toString();
+			return submissionService.saveSubmission(sub);
 		
 		}catch(Exception e) {
 			e.printStackTrace();
-			return "Could not save submission";
+			return null;
 		}
 	}
 	
 	@PutMapping()
-	public String updateSubmission(@RequestParam("id") Long id, @RequestParam("studentid") Long studnet_id, @RequestParam("assignmentid") Long assignment_id, @RequestParam("geirepository") String git_repo, @RequestParam("note") String note) {
+	public SubmissionDTO updateSubmission(@RequestParam("id") Long id, @RequestParam("studentid") Long studnet_id, @RequestParam("assignmentid") Long assignment_id, @RequestParam("geirepository") String git_repo, @RequestParam("note") String note) {
 		StudentDTO student = studentService.getStudentById(studnet_id);
 		student.setId(studnet_id);
 		AssignmentDTO assignment = assignmentService.getAssignmentById(assignment_id);
 		assignment.setId(assignment_id);
 		SubmissionDTO sub = new SubmissionDTO(student, assignment, git_repo, note);
 		try {
-			return submissionService.updateAssignment(id, sub).toString();
+			return submissionService.updateAssignment(id, sub);
 		}catch(Exception e) {
 			e.printStackTrace();
-			return "Could not update submission at id = " + id;
+			return null;
 		}
 	}
 	

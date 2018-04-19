@@ -33,9 +33,9 @@ public class LaboratoryController {
 	
 	@GetMapping()
 	@ResponseBody
-	public String getAllLaboratories(){
+	public List<LaboratoryDTO> getAllLaboratories(){
 		try {
-			return laboratoryService.getAllLaboratories().toString();
+			return laboratoryService.getAllLaboratories();
 		}catch(Exception e) {
 			e.printStackTrace();
 			return null;
@@ -44,9 +44,9 @@ public class LaboratoryController {
 	
 	@GetMapping(value = "/{id}")
 	@ResponseBody
-	public String getLaboratoryById(@RequestParam("id") Long id) {
+	public LaboratoryDTO getLaboratoryById(@RequestParam("id") Long id) {
 		try {
-			return laboratoryService.getById(id).toString();
+			return laboratoryService.getById(id);
 		}catch(Exception e) {
 			e.printStackTrace();
 			return null;
@@ -55,9 +55,9 @@ public class LaboratoryController {
 	
 	@GetMapping(value = "/{number}")
 	@ResponseBody
-	public String getLaboratoyByNumber(@RequestParam("number") int number) {
+	public LaboratoryDTO getLaboratoyByNumber(@RequestParam("number") int number) {
 		try {
-			return laboratoryService.getLaboratoryByNumber(number).toString();
+			return laboratoryService.getLaboratoryByNumber(number);
 		}catch(Exception e) {
 			e.printStackTrace();
 			return null;
@@ -66,9 +66,9 @@ public class LaboratoryController {
 	
 	@GetMapping(value = "/{date}")
 	@ResponseBody
-	public String getLaboratoyByDate(@RequestParam("date") Date date) {
+	public LaboratoryDTO getLaboratoyByDate(@RequestParam("date") Date date) {
 		try {
-			return laboratoryService.getLaboratoryByDate(date).toString();
+			return laboratoryService.getLaboratoryByDate(date);
 		}catch(Exception e) {
 			e.printStackTrace();
 			return null;
@@ -77,18 +77,18 @@ public class LaboratoryController {
 	
 	@GetMapping(value = "/{keyword}")
 	@ResponseBody
-	public String getLaboratoriesByKeyWord(@RequestParam("keyword") String word) {
+	public List<LaboratoryDTO> getLaboratoriesByKeyWord(@RequestParam("keyword") String word) {
 		try {
-			return (laboratoryService.getLaboratoryByKeyWord(word).toString());
+			return laboratoryService.getLaboratoryByKeyWord(word);
 		}catch(Exception e) {
 			e.printStackTrace();
-			return "Nothing found";
+			return null;
 		}
 	}
 	
 	@PostMapping()
 	@ResponseBody
-	public String createLaboratory(@RequestParam("number") int number, @RequestParam("date") Date date, @RequestParam("title") String title,  @RequestParam("curricula") String curricula,  @RequestParam("description") String description) {
+	public LaboratoryDTO createLaboratory(@RequestParam("number") int number, @RequestParam("date") Date date, @RequestParam("title") String title,  @RequestParam("curricula") String curricula,  @RequestParam("description") String description) {
 		LaboratoryDTO laboratory = new LaboratoryDTO();
 		
 		laboratory.setNumber(number);
@@ -97,16 +97,15 @@ public class LaboratoryController {
 		laboratory.setDescription(description);
 		laboratory.setTitle(title);
 		try {
-			laboratoryService.saveLaboratory(laboratory);
-			return "Laboratory created succesfully";
+			return laboratoryService.saveLaboratory(laboratory);
 		}catch(Exception e) {
 			e.printStackTrace();
-			return "Unable to save the laboratory";
+			return null;
 		}
 	}
 	
 	@PutMapping()
-	public String updateLaboratory(@RequestParam("id") Long id, @RequestParam("number") int number, @RequestParam("date") Date date, @RequestParam("title") String title,  @RequestParam("curricula") String curricula,  @RequestParam("description") String description) { 
+	public LaboratoryDTO updateLaboratory(@RequestParam("id") Long id, @RequestParam("number") int number, @RequestParam("date") Date date, @RequestParam("title") String title,  @RequestParam("curricula") String curricula,  @RequestParam("description") String description) { 
 		LaboratoryDTO laboratory = laboratoryService.getById(id);
 		
 		laboratory.setNumber(number);
@@ -116,10 +115,9 @@ public class LaboratoryController {
 		laboratory.setTitle(title);
 		
 		try {
-			laboratoryService.updateLaboratory(id, laboratory);
-			return "Laboratory at id " + id + " was updated succesfully";
+			return laboratoryService.updateLaboratory(id, laboratory);
 		}catch(Exception e) {
-			return "Laboratory at id " + id + " was not updated succesfully";
+			return null;
 		}
 	}
 	

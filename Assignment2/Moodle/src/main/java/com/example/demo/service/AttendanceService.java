@@ -13,9 +13,9 @@ public interface AttendanceService {
 	
 	List<AttendanceDTO> getAttendanceByLaboratory(Long laboratory_id);
 	
-	Attendance saveAttendance(Long studentId, Long laboratoryId);
+	AttendanceDTO saveAttendance(Long studentId, Long laboratoryId);
 	
-	Attendance updateAttendance(Long id, Long studentId, Long LaboratoryId);
+	AttendanceDTO updateAttendance(Long id, Long studentId, Long LaboratoryId);
 	
 	void deleteAttendanceById(Long id);
 }

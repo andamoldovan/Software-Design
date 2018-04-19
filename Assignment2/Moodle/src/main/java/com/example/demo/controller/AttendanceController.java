@@ -41,9 +41,9 @@ public class AttendanceController {
 	
 	@GetMapping(value = "/{id}")
 	@ResponseBody
-	public String getAttendanceById(@RequestParam("id") Long id) {
+	public AttendanceDTO getAttendanceById(@RequestParam("id") Long id) {
 		try {
-			return attendanceService.getById(id).toString();
+			return attendanceService.getById(id);
 		}catch(Exception e) {
 			e.printStackTrace();
 			return null;
@@ -52,9 +52,9 @@ public class AttendanceController {
 	
 	@GetMapping(value = "/{studentid}")
 	@ResponseBody
-	public String getAttendanceByStudent(@RequestParam("studentId") Long student_id){
+	public List<AttendanceDTO> getAttendanceByStudent(@RequestParam("studentId") Long student_id){
 		try {
-			return attendanceService.getAttendancesByStudent(student_id).toString();
+			return attendanceService.getAttendancesByStudent(student_id);
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
@@ -63,9 +63,9 @@ public class AttendanceController {
 	
 	@GetMapping(value = "/{laboratoryid}")
 	@ResponseBody
-	public String getAttendanceByLaboratory(@RequestParam("studentId") Long laboratory_id){
+	public List<AttendanceDTO> getAttendanceByLaboratory(@RequestParam("studentId") Long laboratory_id){
 		try {
-			return attendanceService.getAttendanceByLaboratory(laboratory_id).toString();
+			return attendanceService.getAttendanceByLaboratory(laboratory_id);
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
@@ -73,24 +73,22 @@ public class AttendanceController {
 	}
 	
 	@PostMapping()
-	public String saveAttendance(@RequestParam("studentId") Long studentId, @RequestParam("laboratoryId") Long laboratoryId) {
+	public AttendanceDTO saveAttendance(@RequestParam("studentId") Long studentId, @RequestParam("laboratoryId") Long laboratoryId) {
 		try {
-			attendanceService.saveAttendance(studentId, laboratoryId);
-			return "Laboratory attendance for student " + studentId + " was created succesfully";
+			return attendanceService.saveAttendance(studentId, laboratoryId);
 		}catch(Exception e) {
 			e.printStackTrace();
-			return "Laboratory attendance for student " + studentId + " was not created";
+			return null;
 		}
 	}
 	
 	@PutMapping()
-	public String updateAttendance(@RequestParam("id") Long id, @RequestParam("studentId") Long studentId, @RequestParam("laboratoryId") Long laboratoryId) {
+	public AttendanceDTO updateAttendance(@RequestParam("id") Long id, @RequestParam("studentId") Long studentId, @RequestParam("laboratoryId") Long laboratoryId) {
 		try {
-			attendanceService.updateAttendance(id, studentId, laboratoryId);
-			return "Laboratory attendance for student " + studentId + " was updated succesfully";
+			return attendanceService.updateAttendance(id, studentId, laboratoryId);
 		}catch(Exception e) {
 			e.printStackTrace();
-			return "Laboratory attendance for student " + studentId + " was not updated";
+			return null;
 		}
 	}
 	

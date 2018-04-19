@@ -32,9 +32,9 @@ public class AssignmentController {
 	
 	@GetMapping(value = "/{id}")
 	@ResponseBody
-	public String getAssignmentById(@RequestParam("id") Long id) {
+	public AssignmentDTO getAssignmentById(@RequestParam("id") Long id) {
 		try {
-			return assignmentService.getAssignmentById(id).toString();
+			return assignmentService.getAssignmentById(id);
 		}catch(Exception e) {
 			e.printStackTrace();
 			return null;
@@ -43,36 +43,35 @@ public class AssignmentController {
 	
 	@GetMapping(value = "/{laboratoryid}")
 	@ResponseBody
-	public String getAssignmentsByLaboratoryId(@RequestParam("laboratoryId") Long laboratory_id) {
+	public List<AssignmentDTO> getAssignmentsByLaboratoryId(@RequestParam("laboratoryId") Long laboratory_id) {
 		try {
-			return (assignmentService.getAssignmentsForLaboratory(laboratory_id).toString());
+			return assignmentService.getAssignmentsForLaboratory(laboratory_id);
 		}catch(Exception e) {
 			e.printStackTrace();
-			return "Laboratory at id = " + laboratory_id + " does not have any assignments";
+			return null;
 		}
 	}
 	
 	@PostMapping()
-	public String createAssignment(@RequestParam("name") String name, @RequestParam("description") String description, @RequestParam("date") Date date, @RequestParam("laboratoryId") Long laboratory_id) {
+	public AssignmentDTO createAssignment(@RequestParam("name") String name, @RequestParam("description") String description, @RequestParam("date") Date date, @RequestParam("laboratoryId") Long laboratory_id) {
 		AssignmentDTO a = new AssignmentDTO(name, description, date);
 		try {
-			assignmentService.saveAssignment(a, laboratory_id);
-			return "Assignment was saved succesfully";
+			return assignmentService.saveAssignment(a, laboratory_id);
 		}catch(Exception e) {
 			e.printStackTrace();
-			return "Assignment was not saved succesfully";
+			return null;
 		}
 	}
 	
 	@PutMapping()
-	public String updateAssignment(@RequestParam("id") Long id, @RequestParam("name") String name, @RequestParam("description") String description, @RequestParam("date") Date date, @RequestParam("laboratoryId") Long laboratory_id) {
+	public AssignmentDTO updateAssignment(@RequestParam("id") Long id, @RequestParam("name") String name, @RequestParam("description") String description, @RequestParam("date") Date date, @RequestParam("laboratoryId") Long laboratory_id) {
 		try {
 			AssignmentDTO assignmentDTO = new AssignmentDTO(name, description, date);
-			assignmentService.updateAssignment(id, laboratory_id, assignmentDTO);
-			return "Assignment at id = " + id + " was updated succesfully";
+			return assignmentService.updateAssignment(id, laboratory_id, assignmentDTO);
+			
 		}catch(Exception e) {
 			e.printStackTrace();
-			return "Assignment at id = " + id + " could not be updated";
+			return null;
 		}
 	}
 	
