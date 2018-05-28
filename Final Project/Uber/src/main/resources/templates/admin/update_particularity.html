@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<head>
+	<title>Update User Form</title>
+	<link rel="stylesheet" type="text/css" th:href="@{/css/registration.css}" />
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
+	<form th:action="@{/admin/home}" method="get">
+		<button class="btn btn-md btn-warning btn-block" type="Submit">Go Back</button>
+	</form>	
+	
+	<div class="container">
+		<div class="row">
+			<div class="col-md-6 col-md-offset-3">
+				<form autocomplete="off" action="#" th:action="@{/admin/update_particularity}" 
+					th:object="${particularity}"  method="post" class="form-horizontal"
+					role="form">
+					<h2>Update Particularity Form</h2>
+					
+					<div class="form-group">
+						<div class="col-sm-9">
+							<input type="text" th:field="${particularity.id}" placeholder="id"
+								class="form-control" /> <label
+								th:if="${#fields.hasErrors('id')}" th:errors="${particularity.id}"
+								class="validation-message"></label>
+						</div>
+					</div>
+					
+					<div class="form-group">
+						<div class="col-sm-9">
+							<input type="text" th:field="*{spicy}" placeholder="Spicy"
+								class="form-control" /> <label
+								th:if="${#fields.hasErrors('spicy')}" th:errors="*{spicy}"
+								class="validation-message"></label>
+						</div>
+					</div>
+					
+					<div class="form-group">
+						<div class="col-sm-9">
+							<input type="text" th:field="*{gluten}" placeholder="Gluten"
+								class="form-control" /> <label
+								th:if="${#fields.hasErrors('gluten')}" th:errors="*{gluten}"
+								class="validation-message"></label>
+						</div>
+					</div>
+					
+					<div class="form-group">
+						<div class="col-sm-9">
+							<input type="text" th:field="*{lactose}" placeholder="Lactose"
+								class="form-control" /> <label
+								th:if="${#fields.hasErrors('lactose')}" th:errors="*{lactose}"
+								class="validation-message"></label>
+						</div>
+					</div>
+					
+					<div class="form-group">
+						<div class="col-sm-9">
+							<input type="text" th:field="*{hot}" placeholder="Hot"
+								class="form-control" /> <label
+								th:if="${#fields.hasErrors('hot')}" th:errors="*{hot}"
+								class="validation-message"></label>
+						</div>
+					</div>
+					
+					<div class="form-group">
+						<div class="col-sm-9">
+							<input type="text" th:field="*{nuts}" placeholder="Nuts"
+								class="form-control" /> <label
+								th:if="${#fields.hasErrors('nuts')}" th:errors="*{nuts}"
+								class="validation-message"></label>
+						</div>
+					</div>
+					
+					<div class="form-group">
+						<div class="col-sm-9">
+							<input type="text" th:field="*{vegan}" placeholder="Vegan"
+								class="form-control" /> <label
+								th:if="${#fields.hasErrors('vegan')}" th:errors="*{vegan}"
+								class="validation-message"></label>
+						</div>
+					</div>
+					
+					<div class="form-group">
+						<div class="col-sm-9">
+							<button type="submit" class="btn btn-primary btn-block">Update Particularity</button>
+						</div>
+					</div>
+					
+					<span th:utext="${successMessage}"></span>
+					
+					
+				</form>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

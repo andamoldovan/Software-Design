@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<title>Customer home</title>
+	<meta charset="UTF-8"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<link rel="stylesheet" href="/webjars/bootstrap/3.3.7/css/bootstrap.min.css" />
+</head>
+
+<body>
+	<h1 th:text="Welcome  + ${user.name}"></h1>
+  
+ 	<div class="container">
+ 		<div class="card">
+ 			<div class="card-block">
+ 				<!--  <table style="width:300px"> -->
+ 				<h1>Your current orders</h1>
+ 				<table class="table table-hover">
+ 					<thead>
+				      <tr>
+				        <th>CUSTOMER NAME</th>
+				        <th>CHEF NAME</th>
+				        <th>FINALIZED</th>
+				        <th>RATING</th>
+				      </tr>
+			      	<thead>
+			      	<tbody>
+			      		 <tr th:each="order : ${orders}">
+				        <td th:text="${order.customer.name}"></td>
+				        <td th:text="${order.chef.name}"></td>
+				        <td th:text="${order.finalizeOrder}"></td>
+				        <td th:text="${order.rating}"></td>
+				        <td><form data-th-action="@{/customer/customer_actions}" method="post" th:object = "${order}">
+				        	<button class="btn btn-primary" type="submit" name = "action" th:value="DeleteOrder + ${order.id}">Delete</button></form> </td>
+				      </tr>
+			      	</tbody>
+			     </table>
+			     <hr/>
+			     
+			     
+ 			</div>
+ 			  
+ 			  <!--  
+ 				<form th:action="@{/customer/orders}" method="get" >
+ 					<button class="btn btn-danger" type="Submit">Create New Order</button>
+ 				</form>
+ 			-->
+ 			
+		<form action="#" data-th-action="@{/customer/action}"  method="get">
+     		<button class="btn btn-primary" type="submit" name="action" value="orders">New Order</button>
+     		<button class="btn btn-info" type="submit" name="action" value="personal">Personal Information</button>
+		</form>
+		
+		
+		
+		
+ 		</div>
+ 	</div>
+  
+
+		
+    
+<script src="/webjars/jquery/3.1.1/jquery.min.js"></script>    
+<script src="/webjars/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<title>Product Information home</title>
+	<meta charset="UTF-8"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<link rel="stylesheet" href="/webjars/bootstrap/3.3.7/css/bootstrap.min.css" />
+</head>
+
+<body>
+	<form th:action="@{/customer/home/}" method="get">
+		<button class="btn btn-md btn-warning btn-block" type="Submit">Go Main Profile Page</button>
+	</form>	
+
+	<h1 th:text="Products"></h1>
+  
+ 	<div class="container">
+ 		<div class="card">
+ 			<div class="card-block">
+ 				<!--  <table style="width:300px"> -->
+ 				<table class="table table-hover">
+ 					<thead>
+				      <tr>
+				        <th>NAME</th>
+				        <th>DESCRIPTION</th>
+				        <th>ORIGIN</th>
+				        <th>PRICE/UNIT</th>
+				        <th>CHEF NAME</th>
+				        <th>CHEF EMAIL</th>
+				        <th>CHEF PHONE</th>
+				        <th>MAXIMUM QUANTITY</th>
+				      </tr>
+			      	<thead>
+			      	<tbody>
+			      		 <tr th:each="ch : ${chefProducts}">
+				        <td th:text="${ch.product.name}"></td>
+				        <td th:text="${ch.product.description}"></td>
+				        <td th:text="${ch.product.origin}"></td>
+				        <td th:text="${ch.product.price}"></td>
+				        <td th:text="${ch.chef.name}"></td>
+				        <td th:text="${ch.chef.email}"></td>
+				        <td th:text="${ch.chef.phone}"></td>
+				        <td th:text="${ch.quantity}"></td>
+				      </tr>
+			      	</tbody>
+			     </table>
+			     <hr/>
+			    
+ 			</div>
+ 			  
+
+ 		</div>
+ 	</div>
+  
+
+		
+    
+<script src="/webjars/jquery/3.1.1/jquery.min.js"></script>    
+<script src="/webjars/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</body>
+</html>

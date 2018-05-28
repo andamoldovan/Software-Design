@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<title>Customer home</title>
+	<meta charset="UTF-8"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<link rel="stylesheet" href="/webjars/bootstrap/3.3.7/css/bootstrap.min.css" />
+</head>
+
+<body>
+	<form th:action="@{/chef/home}" method="get">
+		<button class="btn btn-md btn-warning btn-block" type="Submit">Go Back</button>
+	</form>	
+  
+ 	<div class="container">
+ 		<div class="card">
+ 			<div class="card-block">
+ 				<h1>Order Information</h1>
+ 				<h1></h1>
+ 				<h1>Order Item Details</h1>
+ 				<!--  <table style="width:300px"> -->
+ 				<table class="table table-hover">
+ 					<thead>
+				      <tr>
+				        <th>PRODUCT NAME</th>
+				        <th>QUANTITY</th>
+				        <th>FINAL PRICE</th>
+				      </tr>
+			      	<thead>
+			      	<tbody>
+			      		 <tr th:each="item : ${orderItem}">
+				        <td th:text="${item.product.name}"></td>
+				        <td th:text="${item.quantity}"></td>
+				        <td th:text="${item.finalPrice}"></td>
+				      </tr>
+			      	</tbody>
+			     </table>
+			     <hr/>
+			     
+ 			</div>
+ 			
+			<h1>Product Details</h1>
+			<table class="table table-hover">
+ 					<thead>
+				      <tr>
+				        <th>NAME</th>
+				        <th>DESCRIPTION</th>
+				        <th>ORIGIN</th>
+				        <th>PRICE</th>
+				      </tr>
+			      	<thead>
+			      	<tbody>
+			      		 <tr th:each="prod : ${products}">
+				        <td th:text="${prod.name}"></td>
+				        <td th:text="${prod.description}"></td>
+				        <td th:text="${prod.origin}"></td>
+				        <td th:text="${prod.price}"></td>
+				      </tr>
+			      	</tbody>
+			     </table>
+			     <hr/>
+			     
+ 		</div>
+ 	</div>
+  
+
+		
+    
+<script src="/webjars/jquery/3.1.1/jquery.min.js"></script>    
+<script src="/webjars/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</body>
+</html>

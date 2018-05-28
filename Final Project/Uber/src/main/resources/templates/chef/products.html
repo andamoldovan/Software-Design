@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<title>Chef home</title>
+	<meta charset="UTF-8"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<link rel="stylesheet" href="/webjars/bootstrap/3.3.7/css/bootstrap.min.css" />
+</head>
+
+<body>
+
+	<form th:action="@{/chef/home}" method="get">
+		<button class="btn btn-md btn-warning btn-block" type="Submit">Go To Login Page</button>
+	</form>	
+	
+	<h1>Add Products to your list</h1>
+  
+ 	<div class="container">
+ 		<div class="card">
+ 			<div class="card-block">
+ 				<!--  <table style="width:300px"> -->
+ 				<h1>Products</h1>
+ 				<table class="table table-hover">
+ 					<thead>
+				      <tr>
+				        <th>PRODUCT NAME</th>
+				        <th>PRODUCT ORIGIN</th>
+				        <th>PRODUCT DESCRIPTION</th>
+				        <th>PRODUCT QUANTITY</th>
+				        <th>PRODUCT PRICE</th>
+				      </tr>
+			      	<thead>
+			      	<tbody>
+			      		 <tr th:each="prod : ${list}">
+				        <td th:text="${prod.name}"></td>
+				        <td th:text="${prod.origin}"></td>
+				        <td th:text="${prod.description}"></td>
+				        <td th:text="${prod.price}"></td>
+				        <td><form data-th-action="@{/chef/products}" method="post" th:object = "${chefPr}">
+				        	<button class="btn btn-primary" type="submit" name = "action" th:value="Add + ${prod.id}">Add Product</button></form> </td>
+				      </tr>
+			      	</tbody>
+			     </table>
+			     <hr/>
+			     
+			     <form action="#" data-th-action="@{/chef/products}"  method="get">
+     				<button class="btn btn-primary" type="submit" name="action" value="products">Create Product</button>
+				</form>
+			     
+ 			</div>
+ 			  
+		
+		
+ 		</div>
+ 	</div>
+  
+
+		
+    
+<script src="/webjars/jquery/3.1.1/jquery.min.js"></script>    
+<script src="/webjars/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<title>Administrator home</title>
+	<meta charset="UTF-8"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<link rel="stylesheet" href="/webjars/bootstrap/3.3.7/css/bootstrap.min.css" />
+</head>
+
+<body>
+  
+ 	<div class="container">
+ 		<div class="card">
+ 			<div class="card-block">
+ 				<!--  <table style="width:300px"> -->
+ 				<h1>Users list</h1>
+ 				<table class="table table-hover">
+ 					<thead>
+				      <tr>
+				        <th>EMAIL</th>
+				        <th>NAME</th>
+				        <th>ADDRESS</th>
+				        <th>PHONE</th>
+				        <th>IBAN</th>
+				      </tr>
+			      	<thead>
+			      	<tbody>
+			      		 <tr th:each="user : ${list}">
+				        <td th:text="${user.email}"></td>
+				        <td th:text="${user.name}"></td>
+				        <td th:text="${user.address}"></td>
+				        <td th:text="${user.phone}"></td>
+				        <td th:text="${user.iban}"></td>
+				      </tr>
+			      	</tbody>
+			     </table>
+			     <hr/>
+			     
+ 			</div>
+ 			  
+ 			  <!-- 
+ 				<form th:action="@{/admin/delete_user}" method="get" >
+ 					<button class="btn btn-danger" type="Submit">Delete User</button>
+ 				</form>
+ 			 -->
+ 			
+ 			  
+ 			<form action="#" data-th-action="@{/admin/user_actions}" method="get">
+    			 <button class="btn btn-danger" type="submit" name="action" value="delete">Delete User</button>
+    			 <button class="btn btn-danger" type="submit" name="action" value="update">Update User</button>
+			</form>
+		
+		
+		
+		<h1>Food Particularities</h1>
+ 				<table class="table table-hover">
+ 					<thead>
+				      <tr>
+				      	<th>ID</th>
+				        <th>SPICY</th>
+				        <th>GLUTEN</th>
+				        <th>LACTOSE</th>
+				        <th>HOT</th>
+				        <th>NUTS</th>
+				        <th>VEGAN</th>
+				      </tr>
+			      	<thead>
+			      	<tbody>
+			      		 <tr th:each="part : ${particularities}">
+			      		<td th:text="${part.id}"></td>
+				        <td th:text="${part.spicy}"></td>
+				        <td th:text="${part.gluten}"></td>
+				        <td th:text="${part.lactose}"></td>
+				        <td th:text="${part.hot}"></td>
+				        <td th:text="${part.nuts}"></td>
+				        <td th:text="${part.vegan}"></td>
+				        <td><form data-th-action="@{/admin/admin_actions}" method="post" th:object = "${part}">
+				        	<button class="btn btn-primary" type="submit" name = "action" th:value="UpdatePart + ${part.id}">Update</button></form> </td>
+				     	<td><form data-th-action="@{/admin/admin_actions}" method="post" th:object = "${part}">
+				        	<button class="btn btn-primary" type="submit" name = "action" th:value="DeletePart + ${part.id}">Delete</button></form> </td>
+				      </tr>
+			      	</tbody>
+			     </table>
+		
+		<h1>Products</h1>
+ 				<table class="table table-hover">
+ 					<thead>
+				      <tr>
+				      	<th>ID</th>
+				        <th>NAME</th>
+				        <th>DESCRIPTION</th>
+				        <th>ORIGIN</th>
+				        <th>PARTICULARITY_ID</th>
+				        <th>PRICE</th>
+				      </tr>
+			      	<thead>
+			      	<tbody>
+			      		 <tr th:each="prod : ${products}">
+			      		<td th:text="${prod.id}"></td>
+				        <td th:text="${prod.name}"></td>
+				        <td th:text="${prod.description}"></td>
+				        <td th:text="${prod.origin}"></td>
+				        <td th:text="${prod.particularityDTO.id}"></td>
+				        <td th:text="${prod.price}"></td>
+				        <td><form data-th-action="@{/admin/admin_actions}" method="post" th:object = "${prod}">
+				        	<button class="btn btn-primary" type="submit" name = "action" th:value="UpdateProd + ${prod.id}">Update</button></form> </td>
+				     	<td><form data-th-action="@{/admin/admin_actions}" method="post" th:object = "${prod}">
+				        	<button class="btn btn-primary" type="submit" name = "action" th:value="DeleteProd + ${prod.id}">Delete</button></form> </td>
+				      </tr>
+			      	</tbody>
+			     </table>
+		
+ 		</div>
+ 	</div>
+  
+
+		
+    
+<script src="/webjars/jquery/3.1.1/jquery.min.js"></script>    
+<script src="/webjars/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</body>
+</html>
