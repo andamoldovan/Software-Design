@@ -31,7 +31,7 @@
 				        <td th:text="${order.chef.name}"></td>
 				        <td th:text="${order.finalizeOrder}"></td>
 				        <td th:text="${order.rating}"></td>
-				        <td><form data-th-action="@{/customer/customer_actions}" method="post" th:object = "${order}">
+				        <td><form method="post" th:object = "${order}">
 				        	<button class="btn btn-primary" type="submit" name = "action" th:value="DeleteOrder + ${order.id}">Delete</button></form> </td>
 				      </tr>
 			      	</tbody>
@@ -47,15 +47,17 @@
  				</form>
  			-->
  			
-		<form action="#" data-th-action="@{/customer/action}"  method="get">
-     		<button class="btn btn-primary" type="submit" name="action" value="orders">New Order</button>
-     		<button class="btn btn-info" type="submit" name="action" value="personal">Personal Information</button>
+		<form data-th-action="@{/customer/} + ${id} + @{/orders}" th:method="get">
+     		<button class="btn btn-primary" type="submit" th:name="action" th:value="orders">New Order</button>
+		</form>
+		
+		<form data-th-action="@{/customer/} + ${id} + @{/personal}" th:method="get">
+     	
+     		<button class="btn btn-info" type="submit" th:name="action" th:value="personal">Personal Information</button>
 		</form>
 		
 		
-		
-		
- 		</div>
+	 		</div>
  	</div>
   
 

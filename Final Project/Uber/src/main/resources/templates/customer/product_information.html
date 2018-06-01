@@ -9,8 +9,8 @@
 </head>
 
 <body>
-	<form th:action="@{/customer/home/}" method="get">
-		<button class="btn btn-md btn-warning btn-block" type="Submit">Go Main Profile Page</button>
+	<form th:action="@{/customer/} + ${id} + @{/orders}" method="get">
+		<button class="btn btn-md btn-warning btn-block" type="Submit">Go Back To Orders Page</button>
 	</form>	
 
 	<h1 th:text="Products"></h1>

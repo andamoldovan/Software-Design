@@ -10,8 +10,8 @@
 
 <body>
 
-	<form th:action="@{/chef/home}" method="get">
-		<button class="btn btn-md btn-warning btn-block" type="Submit">Go To Login Page</button>
+	<form th:action="@{/chef/} + ${id} + @{/home}" method="get">
+		<button class="btn btn-md btn-warning btn-block" type="Submit">Go Back to Main Profile Page</button>
 	</form>	
 	
 	<h1>Add Products to your list</h1>
@@ -37,16 +37,14 @@
 				        <td th:text="${prod.origin}"></td>
 				        <td th:text="${prod.description}"></td>
 				        <td th:text="${prod.price}"></td>
-				        <td><form data-th-action="@{/chef/products}" method="post" th:object = "${chefPr}">
+				        <td><form data-th-action="@{/chef/} + ${id} + @{/products}" method="post" th:object = "${chefPr}">
 				        	<button class="btn btn-primary" type="submit" name = "action" th:value="Add + ${prod.id}">Add Product</button></form> </td>
 				      </tr>
 			      	</tbody>
 			     </table>
 			     <hr/>
 			     
-			     <form action="#" data-th-action="@{/chef/products}"  method="get">
-     				<button class="btn btn-primary" type="submit" name="action" value="products">Create Product</button>
-				</form>
+			    
 			     
  			</div>
  			  

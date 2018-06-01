@@ -2,7 +2,7 @@
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:th="http://www.thymeleaf.org">
 <head>
-	<title>Update User Form</title>
+	<title>Create Product Form</title>
 	<link rel="stylesheet" type="text/css" th:href="@{/css/registration.css}" />
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
@@ -16,77 +16,61 @@
 	<div class="container">
 		<div class="row">
 			<div class="col-md-6 col-md-offset-3">
-				<form autocomplete="off" action="#" th:action="@{/admin/update_particularity}" 
-					th:object="${particularity}"  method="post" class="form-horizontal"
+				<form autocomplete="off" action="#" th:action="@{/admin/create_product}" 
+					th:object="${p}"  method="post" class="form-horizontal"
 					role="form">
-					<h2>Update Particularity Form</h2>
+					<h2>Create Product Form</h2>
 					
 					<div class="form-group">
 						<div class="col-sm-9">
-							<input type="text" th:field="${particularity.id}" placeholder="id"
+							<input type="text" th:field="*{name}" placeholder="Name"
 								class="form-control" /> <label
-								th:if="${#fields.hasErrors('id')}" th:errors="${particularity.id}"
+								th:if="${#fields.hasErrors('name')}" th:errors="*{Name}"
 								class="validation-message"></label>
 						</div>
 					</div>
 					
 					<div class="form-group">
 						<div class="col-sm-9">
-							<input type="text" th:field="*{spicy}" placeholder="Spicy"
+							<input type="text" th:field="*{description}" placeholder="Description"
 								class="form-control" /> <label
-								th:if="${#fields.hasErrors('spicy')}" th:errors="*{spicy}"
+								th:if="${#fields.hasErrors('description')}" th:errors="*{description}"
 								class="validation-message"></label>
 						</div>
 					</div>
 					
 					<div class="form-group">
 						<div class="col-sm-9">
-							<input type="text" th:field="*{gluten}" placeholder="Gluten"
+							<input type="text" th:field="*{origin}" placeholder="Origin"
 								class="form-control" /> <label
-								th:if="${#fields.hasErrors('gluten')}" th:errors="*{gluten}"
+								th:if="${#fields.hasErrors('origin')}" th:errors="*{origin}"
+								class="validation-message"></label>
+						</div>
+					</div>
+					
+					
+					<div class="form-group">
+						<div class="col-sm-9">
+							<input type="text" th:field="*{price}" placeholder="Price"
+								class="form-control" /> <label
+								th:if="${#fields.hasErrors('price')}" th:errors="*{price}"
 								class="validation-message"></label>
 						</div>
 					</div>
 					
 					<div class="form-group">
 						<div class="col-sm-9">
-							<input type="text" th:field="*{lactose}" placeholder="Lactose"
+							<input type="text" th:field="${p.particularityDTO.id}" placeholder="ParticularityId"
 								class="form-control" /> <label
-								th:if="${#fields.hasErrors('lactose')}" th:errors="*{lactose}"
+								th:if="${#fields.hasErrors('particularityDTO.id')}" th:errors="${p.particularityDTO.id}"
 								class="validation-message"></label>
 						</div>
 					</div>
 					
-					<div class="form-group">
-						<div class="col-sm-9">
-							<input type="text" th:field="*{hot}" placeholder="Hot"
-								class="form-control" /> <label
-								th:if="${#fields.hasErrors('hot')}" th:errors="*{hot}"
-								class="validation-message"></label>
-						</div>
-					</div>
 					
 					<div class="form-group">
 						<div class="col-sm-9">
-							<input type="text" th:field="*{nuts}" placeholder="Nuts"
-								class="form-control" /> <label
-								th:if="${#fields.hasErrors('nuts')}" th:errors="*{nuts}"
-								class="validation-message"></label>
-						</div>
-					</div>
-					
-					<div class="form-group">
-						<div class="col-sm-9">
-							<input type="text" th:field="*{vegan}" placeholder="Vegan"
-								class="form-control" /> <label
-								th:if="${#fields.hasErrors('vegan')}" th:errors="*{vegan}"
-								class="validation-message"></label>
-						</div>
-					</div>
-					
-					<div class="form-group">
-						<div class="col-sm-9">
-							<button type="submit" class="btn btn-primary btn-block">Update Particularity</button>
+							<button type="submit" class="btn btn-primary btn-block">Update Product</button>
 						</div>
 					</div>
 					

@@ -34,6 +34,24 @@ public class UserRoleServiceImpl implements UserRoleService{
 	}
 
 	@Override
+	public UserRoleDTO getUserRoleByUser(UserDTO userDTO) {
+		try {
+			User user = new User();
+			user.setId(userDTO.getId());
+			user.setEmail(userDTO.getEmail());
+			user.setPassword(userDTO.getPassword());
+			user.setName(userDTO.getName());
+			user.setAddress(userDTO.getAddress());
+			user.setPhone(userDTO.getPhone());
+			user.setIban(userDTO.getIban());
+			return transform(userRoleDAO.getUserRoleByUserId(user.getId()));
+		}catch(Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
+	@Override
 	public UserRoleDTO getUserByRole(String role) {
 		try {
 			return transform(userRoleDAO.findUserByRole(role));
@@ -103,6 +121,8 @@ public class UserRoleServiceImpl implements UserRoleService{
 		}
 		return result;
 	}
+
+	
 
 	
 }

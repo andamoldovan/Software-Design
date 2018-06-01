@@ -10,6 +10,8 @@ public interface UserRoleService {
 	
 	UserRoleDTO getUserRoleById(Long id);
 	
+	UserRoleDTO getUserRoleByUser(UserDTO user);
+	
 	UserRoleDTO getUserByRole(String role);
 	
 	UserRoleDTO createUserRole(UserRoleDTO userRoleDTO);

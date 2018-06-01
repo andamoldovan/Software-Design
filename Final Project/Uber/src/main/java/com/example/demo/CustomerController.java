@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -46,41 +47,40 @@ public class CustomerController {
 	private OrderDTO currentOrder;
 	private OrderItemDTO currentOrderItem;
 	
-	@RequestMapping(value = "/customer/home", method = RequestMethod.GET)
-	public String showPage(Model model) {
-		cart = new ArrayList<ChefProductDTO>();
-		orderItems = new ArrayList<OrderItemDTO>();
-		UserDTO user = userService.getUserByEmail("andamold@gmail.com");
-		currentUser = new UserDTO();
-		currentUser = user;
+	@RequestMapping(value = "/customer/{id}/home", method = RequestMethod.GET)
+	public String showPage(Model model, @PathVariable("id") String id) {
+		UserDTO user = userService.getUserById(Long.valueOf(id));
 		model.addAttribute("user", user);
 		model.addAttribute("orders", orderService.getOrdersByCustomer(user));
+		model.addAttribute("id", id);
 		return "customer/home";
 	}
-	
 
-	
-	
-	@RequestMapping(value = "/customer/action", method = RequestMethod.GET)
-	public String choseAction(Model model, @RequestParam(value = "action", required = true) String action) {
-		if(action.equals("orders")) {
-			currentOrder = new OrderDTO(currentUser, currentUser);
-			orderService.createOrder(currentOrder);
-			model.addAttribute("products", productService.getAllProducts());
-			return "customer/orders";
-		}
-		if(action.equals("personal")) {
-			model.addAttribute("user", new UserDTO());
-			return "/customer/personal";
-		}
-		System.out.println("none");
-		return "/admin/home";
+	@RequestMapping(value = "/customer/{id}/personal", method = RequestMethod.GET)
+	public String getPersonal(Model model, @PathVariable("id") String id) {
+		model.addAttribute("user", new UserDTO());
+		model.addAttribute("id", id);
+		return "customer/personal";
 	}
 	
-	@RequestMapping(value = "/customer/personal", method = RequestMethod.POST)
-	public ModelAndView updateUser(@Valid UserDTO user, BindingResult bindingResult) {
+	@RequestMapping(value = "/customer/{id}/orders", method = RequestMethod.GET)
+	public String choseAction(Model model, @PathVariable("id") String id) {
+			UserDTO user = userService.getUserById(Long.valueOf(id));
+			OrderDTO currentOrder = new OrderDTO(user, user);
+			orderService.createOrder(currentOrder);
+			model.addAttribute("products", productService.getAllProducts());
+//			OrderItemDTO orderItem = orderItemService.getOrderItemsByOrder(currentOrder).get(0);
+//			List<ChefProductDTO> chefs = chefProductService.getChefsByProduct(orderItem.getProduct());
+			return "customer/orders";
+	}
+	
+	@RequestMapping(value = "/customer/{id}/personal", method = RequestMethod.POST)
+	public ModelAndView updateUser(@Valid UserDTO user, BindingResult bindingResult, @PathVariable("id") String id) {
 		ModelAndView modelAndView = new ModelAndView();
+		UserDTO currentUser = userService.getUserById(Long.valueOf(id));
 		UserDTO userExists = userService.getUserByEmail(currentUser.getEmail());
+	
+		
 		if (userExists == null) {
 			bindingResult
 					.rejectValue("email", "error.user",
@@ -122,56 +122,63 @@ public class CustomerController {
 		return "customer/home";
 	}
 	
-	@RequestMapping(value = "/customer/product_actions", method = RequestMethod.POST)
-	public String product_actions(Model model, @RequestParam(value = "action", required = true) String action) {
-		if(action.substring(0,  4).equals("Open")) {
+	@RequestMapping(value = "/customer/{id}/product_information", method = RequestMethod.GET)
+	public String product_actions(Model model, @RequestParam(value = "action", required = true) String action, @PathVariable("id") String id) {
 			List<UserDTO> chefs = userService.getAllUsers();
 			ProductDTO product = productService.getProductById(Long.valueOf(action.substring(4, action.length())));
 			List<ChefProductDTO> list = chefProductService.getChefsByProduct(product);
 			model.addAttribute("chefProducts", list);
+			model.addAttribute("id", id);
 			return "customer/product_information";
-		}
-		UserDTO user = userService.getUserByEmail("andamold@gmail.com");
-		currentUser = new UserDTO();
-		currentUser = user;
-		model.addAttribute("user", user);
-		model.addAttribute("orders", orderService.getOrdersByCustomer(user));
-		return "customer/home";
 	}
 	
-	@RequestMapping(value = "/customer/add_actions", method = RequestMethod.POST)
-	public String add_actions(Model model, @RequestParam(value = "action", required = true) String action) {
-		if(action.substring(0, 7).equals("AddProd")) {
-			//add product to cart form any chef
-			OrderItemDTO ord = new OrderItemDTO();
-			ord.setProduct(productService.getProductById(Long.valueOf(action.substring(7, action.length()))));
-			ord.setOrder(getCurrentOrder("andamold@gmail.com"));
-			System.out.println("\n\n\n\n\n\n\n\n\n orderItem: " + ord.getOrder().getId() + " " + ord.getProduct().getId());
-			orderItemService.createOrderItem(ord);
-			
-			model.addAttribute("ch", getCurrentOrderItem(ord.getProduct(), ord.getOrder()));
-			return "customer/quantity";
-		}
-		if(action.substring(0, 7).equals("AddChef")) {
-			//add product to cart form a specific chef
-		}
-		UserDTO user = userService.getUserByEmail("andamold@gmail.com");
-		currentUser = new UserDTO();
-		currentUser = user;
-		model.addAttribute("user", user);
-		model.addAttribute("orders", orderService.getOrdersByCustomer(user));
-		return "customer/home";
+//	@RequestMapping(value = "/customer/add_actions", method = RequestMethod.POST)
+//	public String add_actions(Model model, @RequestParam(value = "action", required = true) String action) {
+//		if(action.substring(0, 7).equals("AddProd")) {
+//			//add product to cart form any chef
+//			OrderItemDTO ord = new OrderItemDTO();
+//			ord.setProduct(productService.getProductById(Long.valueOf(action.substring(7, action.length()))));
+//			ord.setOrder(getCurrentOrder("andamold@gmail.com"));
+//			System.out.println("\n\n\n\n\n\n\n\n\n orderItem: " + ord.getOrder().getId() + " " + ord.getProduct().getId());
+//			orderItemService.createOrderItem(ord);
+//			
+//			model.addAttribute("ch", getCurrentOrderItem(ord.getProduct(), ord.getOrder()));
+//			return "customer/quantity";
+//		}
+//		if(action.substring(0, 7).equals("AddChef")) {
+//			//add product to cart form a specific chef
+//		}
+//		UserDTO user = userService.getUserByEmail("andamold@gmail.com");
+//		currentUser = new UserDTO();
+//		currentUser = user;
+//		model.addAttribute("user", user);
+//		model.addAttribute("orders", orderService.getOrdersByCustomer(user));
+//		return "customer/home";
+//	}
+	
+	@RequestMapping(value = "/customer/{id}/quantity", method = RequestMethod.GET)
+	public String choseQuantity(Model model, @PathVariable("id") String id, @RequestParam(value = "action", required = true) String action) {
+		
+		OrderItemDTO ord = new OrderItemDTO();
+		UserDTO user = userService.getUserById(Long.valueOf(id));
+		ord.setProduct(productService.getProductById(Long.valueOf(action.substring(7, action.length()))));
+		ord.setOrder(getCurrentOrder(user.getEmail()));
+		orderItemService.createOrderItem(ord);
+		model.addAttribute("ch", getCurrentOrderItem(ord.getProduct(), ord.getOrder()));
+		model.addAttribute("id", id);
+		return "customer/quantity";
 	}
 	
-	@RequestMapping(value = "customer/quantity", method = RequestMethod.POST)
-	public ModelAndView updateProductQuantity(@Valid @ModelAttribute("ch") OrderItemDTO ch, BindingResult bindingResult) {
+	@RequestMapping(value = "customer/{id}/quantity", method = RequestMethod.POST)
+	public ModelAndView updateProductQuantity(@Valid @ModelAttribute("ch") OrderItemDTO ch, BindingResult bindingResult, @PathVariable("id") String id) {
 			ModelAndView modelAndView = new ModelAndView();
 			ChefProductDTO prod = new ChefProductDTO();
 			OrderItemDTO item = new OrderItemDTO();
-			OrderDTO currentOrder = getCurrentOrder("andamold@gmail.com");
-			OrderItemDTO currentOrderItem = getOrderItemByProductName(ch.getProduct().getName(), "andamold@gmail.com");
+			UserDTO user = userService.getUserById(Long.valueOf(id));
+			OrderDTO currentOrder = getCurrentOrder(user.getEmail());
+			OrderItemDTO currentOrderItem = getOrderItemByProductName(ch.getProduct().getName(), user.getEmail());
 			UserDTO chef = new UserDTO();
-
+			System.out.println("\n\n\n\n\n\n\n\n" + currentOrderItem.getId() + "\n\n\n\n\n\n\n\n\n");
 			if(currentOrderItem.getId() != null) {
 				List<ChefProductDTO> chefs = chefProductService.getChefsByProduct(getProductByName(ch.getProduct().getName()));
 				for(ChefProductDTO c : chefs) {
@@ -204,28 +211,28 @@ public class CustomerController {
 					bindingResult
 					.rejectValue("quantity", "error.ch",
 							"Product with provided credentials does not exist");
-					modelAndView.setViewName("quantity");
+					modelAndView.setViewName("customer/" + id + "/quantity");
 			}
 			
 			return modelAndView;
 	}
 	
-	@RequestMapping(value = "customer/orders", method = RequestMethod.POST)
-	public String finalizeOrder(Model model) {
-		
-		OrderDTO currentOrder = getCurrentOrder("andamold@gmail.com");
-		OrderItemDTO orderItem = orderItemService.getOrderItemsByOrder(currentOrder).get(0);
-		List<ChefProductDTO> chefs = chefProductService.getChefsByProduct(orderItem.getProduct());
-		for(ChefProductDTO c : chefs) {
-			
-		}
-		
-		
-		UserDTO currentUser = userService.getUserByEmail("andamold@gmail.com");
-		model.addAttribute("user", currentUser);
-		model.addAttribute("orders", orderService.getOrdersByCustomer(currentUser));
-		return "customer/home";
-	}
+//	@RequestMapping(value = "customer/{id}/orders", method = RequestMethod.GET)
+//	public String finalizeOrder(Model model, @PathVariable("id") String id) {
+//		
+//		OrderDTO currentOrder = getCurrentOrder("andamold@gmail.com");
+//		OrderItemDTO orderItem = orderItemService.getOrderItemsByOrder(currentOrder).get(0);
+//		List<ChefProductDTO> chefs = chefProductService.getChefsByProduct(orderItem.getProduct());
+//		for(ChefProductDTO c : chefs) {
+//			
+//		}
+//		
+//		
+//		UserDTO currentUser = userService.getUserByEmail("andamold@gmail.com");
+//		model.addAttribute("user", currentUser);
+//		model.addAttribute("orders", orderService.getOrdersByCustomer(currentUser));
+//		return "customer/home";
+//	}
 	
 	@RequestMapping(value = "/customer/cart_action", method = RequestMethod.POST)
 	public String goBackToTheCart(Model model, @RequestParam(value = "action", required = true) String action) {
@@ -256,15 +263,15 @@ public class CustomerController {
 		
 		List<OrderItemDTO> prod = orderItemService.getOrderItemsByProduct(product);
 		List<OrderItemDTO> ord = orderItemService.getOrderItemsByOrder(order);
-		System.out.println("\n\n\n\n\n\n\n\n");
-		prod.stream().forEach(System.out::println);
-		System.out.println("\n");
-		prod.stream().forEach(System.out::println);
-		System.out.println("\n\n\n\n\n\n\n\n");
+//		System.out.println("\n\n\n\n\n\n\n\n");
+//		prod.stream().forEach(System.out::println);
+//		System.out.println("\n");
+//		prod.stream().forEach(System.out::println);
+//		System.out.println("\n\n\n\n\n\n\n\n");
 		for(OrderItemDTO o : ord) {
 			for(OrderItemDTO p : prod) {
 				if(o.getId() == p.getId()) {
-					System.out.println(o.toString() + "\n\n");
+					//System.out.println(o.toString() + "\n\n");
 					return o;
 				}
 			}

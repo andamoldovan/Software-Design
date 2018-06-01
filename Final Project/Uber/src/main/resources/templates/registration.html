@@ -17,62 +17,72 @@
 		<div class="row">
 			<div class="col-md-6 col-md-offset-3">
 				<form autocomplete="off" action="#" th:action="@{/registration}"
-					th:object="${user}" method="post" class="form-horizontal"
+					th:object="${userRole}" method="post" class="form-horizontal"
 					role="form">
 					<h2>Registration Form</h2>
 					<div class="form-group">
 						<div class="col-sm-9">
-						<label th:if="${#fields.hasErrors('name')}" th:errors="*{name}"
+						<label th:if="${#fields.hasErrors('userDTO.name')}" th:errors="${userRole.userDTO.name}"
 								class="validation-message"></label>
-						<input type="text" th:field="*{name}" placeholder="Name"
+						<input type="text" th:field="${userRole.userDTO.name}" placeholder="Name"
 								class="form-control" /> 
 						</div>
 					</div>
 
 					<div class="form-group">
 						<div class="col-sm-9">
-						<label	th:if="${#fields.hasErrors('address')}" th:errors="*{address}"
+						<label	th:if="${#fields.hasErrors('userDTO.address')}" th:errors="${userRole.userDTO.address}"
 								class="validation-message"></label>
-							<input type="text" th:field="*{address}"
+							<input type="text" th:field="${userRole.userDTO.address}"
 								placeholder="Address" class="form-control" /> 
 						</div>
 					</div>
 					
 					<div class="form-group">
 						<div class="col-sm-9">
-						<label	th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}"
+						<label	th:if="${#fields.hasErrors('userDTO.phone')}" th:errors="${userRole.userDTO.phone}"
 								class="validation-message"></label>
-							<input type="text" th:field="*{phone}"
+							<input type="text" th:field="${userRole.userDTO.phone}"
 								placeholder="Phone" class="form-control" /> 
 						</div>
 					</div>
 					
 					<div class="form-group">
 						<div class="col-sm-9">
-						<label	th:if="${#fields.hasErrors('iban')}" th:errors="*{iban}"
+						<label	th:if="${#fields.hasErrors('userDTO.iban')}" th:errors="${userRole.userDTO.iban}"
 								class="validation-message"></label>
-							<input type="text" th:field="*{iban}"
+							<input type="text" th:field="${userRole.userDTO.iban}"
 								placeholder="IBAN" class="form-control" /> 
 						</div>
 					</div>
 					
 					<div class="form-group">
 						<div class="col-sm-9">
-							<input type="text" th:field="*{email}" placeholder="Email"
+							<input type="text" th:field="${userRole.userDTO.email}" placeholder="Email"
 								class="form-control" /> <label
-								th:if="${#fields.hasErrors('email')}" th:errors="*{email}"
+								th:if="${#fields.hasErrors('userDTO.email')}" th:errors="${userRole.userDTO.email}"
 								class="validation-message"></label>
 						</div>
 					</div>
 					<div class="form-group">
 						<div class="col-sm-9">
-							<input type="password" th:field="*{password}"
+							<input type="password" th:field="${userRole.userDTO.password}"
 								placeholder="Password" class="form-control" /> <label
-								th:if="${#fields.hasErrors('password')}" th:errors="*{password}"
+								th:if="${#fields.hasErrors('userDTO.password')}" th:errors="${userRole.userDTO.password}"
 								class="validation-message"></label>
 						</div>
 					</div>
 
+					
+					<div class="form-group">
+						<div class="col-sm-9">
+							<input type="text" th:field="*{role}" placeholder="ROLE"
+								class="form-control" /> <label
+								th:if="${#fields.hasErrors('role')}" th:errors="*{role}"
+								class="validation-message"></label>
+						</div>
+					</div>	
+						
 					<div class="form-group">
 						<div class="col-sm-9">
 							<button type="submit" class="btn btn-primary btn-block">Register User</button>

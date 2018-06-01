@@ -33,9 +33,9 @@
 				        <td th:text="${chefPr.product.description}"></td>
 				        <td th:text="${chefPr.quantity}"></td>
 				        <td th:text="${chefPr.product.price}"></td>
-				        <td><form data-th-action="@{/chef/product_actions}" method="post" th:object = "${chefPr}">
+				        <td><form data-th-action="@{/chef/} + ${id} + @{/quantity}" method="get" th:object = "${chefPr}">
 				        	<button class="btn btn-primary" type="submit" name = "action" th:value="Inform + ${chefPr.id}">Update quantity</button></form> </td>
-				        <td><form data-th-action="@{/chef/product_actions}" method="post" th:object = "${chefPr}">
+				        <td><form data-th-action="@{/chef/} + ${id} + @{/product_actions}" method="post" th:object = "${chefPr}">
 				        	<button class="btn btn-primary" type="submit" name = "action" th:value="Delete + ${chefPr.id}">Delete product</button></form> </td>
 
 				      </tr>
@@ -43,7 +43,7 @@
 			     </table>
 			     <hr/>
 			     
-			     <form action="#" data-th-action="@{/chef/products}"  method="get">
+			     <form action="#" data-th-action="@{/chef/} + ${id} + @{/products}"  method="get">
      				<button class="btn btn-primary" type="submit" name="action" value="products">Add Products</button>
 				</form>
 			     
@@ -67,11 +67,11 @@
 				        <td th:text="${order.finalizeOrder}"></td>
 				        <td th:text="${order.rating}"></td>
 				        <td th:text="${order.confirmed}"></td>
-				        <td><form data-th-action="@{/chef/order_action}" method="post" th:object = "${order}">
+				        <td><form data-th-action="@{/chef/} + ${id} + @{/order_information}" method="get" th:object = "${order}">
 				        	<button class="btn btn-primary" type="submit" name = "action" th:value="InfoUnco + ${order.id}">Information</button></form> </td>
-				     	<td><form data-th-action="@{/chef/order_action}" method="post" th:object = "${part}">
+				     	<td><form data-th-action="@{/chef/} + ${id} + @{/order_action}" method="post" th:object = "${part}">
 				        	<button class="btn btn-primary" type="submit" name = "action" th:value="DeleteUn + ${order.id}">Delete</button></form> </td>
-				        <td><form data-th-action="@{/chef/order_action}" method="post" th:object = "${part}">
+				        <td><form data-th-action="@{/chef/} + ${id} + @{/order_action}" method="post" th:object = "${part}">
 				        	<button class="btn btn-primary" type="submit" name = "action" th:value="ConfirmO + ${order.id}">Confirm</button></form> </td>
 				      </tr>
 			      	</tbody>
@@ -96,17 +96,17 @@
 				        <td th:text="${order.finalizeOrder}"></td>
 				        <td th:text="${order.rating}"></td>
 				        <td th:text="${order.confirmed}"></td>
-				        <td><form data-th-action="@{/chef/order_action}" method="post" th:object = "${order}">
+				        <td><form data-th-action="@{/chef/} + ${id} + @{/order_information}" method="get" th:object = "${order}">
 				        	<button class="btn btn-primary" type="submit" name = "action" th:value="InfoConf + ${order.id}">Information</button></form> </td>
 				     	<td><form data-th-action="@{/chef/order_action}" method="post" th:object = "${part}">
 				        	<button class="btn btn-primary" type="submit" name = "action" th:value="DeleteCo + ${order.id}">Delete</button></form> </td>
-				        <td><form data-th-action="@{/chef/order_action}" method="post" th:object = "${part}">
+				        <td><form data-th-action="@{/chef/} + ${id} + @{/order_action}" method="post" th:object = "${part}">
 				        	<button class="btn btn-primary" type="submit" name = "action" th:value="Finalize + ${order.id}">Finalize Order</button></form> </td>
 				      </tr>
 			      	</tbody>
 			     </table>
 			     
-			     <form action="#" data-th-action="@{/chef/personal}"  method="get">
+			     <form action="#" data-th-action="@{/chef/} + ${id} + @{/personal}"  method="get">
      				<button class="btn btn-primary" type="submit" name="action" value="personal">Personal</button>
 				</form>
  		</div>

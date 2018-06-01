@@ -32,7 +32,7 @@
 				        <td th:text="${user.address}"></td>
 				        <td th:text="${user.phone}"></td>
 				        <td th:text="${user.iban}"></td>
-				      </tr>
+				        </tr>
 			      	</tbody>
 			     </table>
 			     <hr/>
@@ -46,9 +46,14 @@
  			 -->
  			
  			  
- 			<form action="#" data-th-action="@{/admin/user_actions}" method="get">
+ 			<form action="#" data-th-action="@{/admin/} + ${id} + @{/delete_user}" method="get">
     			 <button class="btn btn-danger" type="submit" name="action" value="delete">Delete User</button>
-    			 <button class="btn btn-danger" type="submit" name="action" value="update">Update User</button>
+			</form>
+			
+			<br></br>
+			
+			<form action="#" data-th-action="@{/admin/} + ${id} + @{/update_user}" method="get">
+				 <button class="btn btn-danger" type="submit" name="action" value="update">Update User</button>
 			</form>
 		
 		
@@ -75,9 +80,9 @@
 				        <td th:text="${part.hot}"></td>
 				        <td th:text="${part.nuts}"></td>
 				        <td th:text="${part.vegan}"></td>
-				        <td><form data-th-action="@{/admin/admin_actions}" method="post" th:object = "${part}">
+				        <td><form data-th-action="@{/admin/} + ${id} + @{/update_particularity}" method="get" th:object = "${part}">
 				        	<button class="btn btn-primary" type="submit" name = "action" th:value="UpdatePart + ${part.id}">Update</button></form> </td>
-				     	<td><form data-th-action="@{/admin/admin_actions}" method="post" th:object = "${part}">
+				     	<td><form data-th-action="@{/admin/} + ${id} + @{/admin_actions}" method="post" th:object = "${part}">
 				        	<button class="btn btn-primary" type="submit" name = "action" th:value="DeletePart + ${part.id}">Delete</button></form> </td>
 				      </tr>
 			      	</tbody>
@@ -103,14 +108,17 @@
 				        <td th:text="${prod.origin}"></td>
 				        <td th:text="${prod.particularityDTO.id}"></td>
 				        <td th:text="${prod.price}"></td>
-				        <td><form data-th-action="@{/admin/admin_actions}" method="post" th:object = "${prod}">
+				        <td><form data-th-action="@{/admin/} + ${id} + @{/update_product}" method="get" th:object = "${prod}">
 				        	<button class="btn btn-primary" type="submit" name = "action" th:value="UpdateProd + ${prod.id}">Update</button></form> </td>
-				     	<td><form data-th-action="@{/admin/admin_actions}" method="post" th:object = "${prod}">
+				     	<td><form data-th-action="@{/admin/} + ${id} + @{/admin_actions}" method="post" th:object = "${prod}">
 				        	<button class="btn btn-primary" type="submit" name = "action" th:value="DeleteProd + ${prod.id}">Delete</button></form> </td>
 				      </tr>
 			      	</tbody>
 			     </table>
-		
+			     
+				<form data-th-action="@{/admin/} + ${id} + @{/create_product}" method="get" >
+				     	<button class="btn btn-primary" type="submit" name = "action" th:value="Create">Create Product</button>
+				</form> 
  		</div>
  	</div>
   

@@ -9,14 +9,14 @@
   	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
 <body>
-	<form th:action="@{/chef/home}" method="get">
-		<button class="btn btn-md btn-warning btn-block" type="Submit">Go To Login Page</button>
+	<form th:action="@{/chef/} + ${id} + @{/home}" method="get">
+		<button class="btn btn-md btn-warning btn-block" type="Submit">Go To Main Chef Page</button>
 	</form>	
 	
 	<div class="container">
 		<div class="row">
 			<div class="col-md-6 col-md-offset-3">
-				<form autocomplete="off" action="#" th:action="@{/chef/quantity}"
+				<form autocomplete="off" action="#" th:action="@{/chef/} + ${id} + @{/quantity}"
 					th:object="${ch}" method="post" class="form-horizontal"
 					role="form">
 					<h2>Modify Quantity</h2>

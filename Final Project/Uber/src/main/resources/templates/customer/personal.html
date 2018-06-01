@@ -9,14 +9,14 @@
   	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
 <body>
-	<form th:action="@{/customer/home}" method="get">
-		<button class="btn btn-md btn-warning btn-block" type="Submit">Go Back</button>
+	<form  data-th-action="@{/customer/} + ${id} + @{/home}" method="get">
+		<button class="btn btn-md btn-warning btn-block" th:action = "back" type="Submit">Go Back</button>
 	</form>	
 	
 	<div class="container">
 		<div class="row">
 			<div class="col-md-6 col-md-offset-3">
-				<form autocomplete="off" action="#" th:action="@{/customer/personal}"
+				<form autocomplete="off" action="#" th:action="@{/customer/} + ${id} + @{/personal}"
 					th:object="${user}" method="post" class="form-horizontal"
 					role="form">
 					<h2>Personal Information</h2>
@@ -70,7 +70,7 @@
 
 					<div class="form-group">
 						<div class="col-sm-9">
-							<button type="submit" class="btn btn-primary btn-block">Modify Changes</button>
+							<button type="submit" th:actuin="send" class="btn btn-primary btn-block">Modify Changes</button>
 						</div>
 					</div>
 					

@@ -9,7 +9,7 @@
 </head>
 
 <body>
-	<form th:action="@{/chef/home}" method="get">
+	<form th:action="@{/chef/} + ${id} + @{/home}" method="get">
 		<button class="btn btn-md btn-warning btn-block" type="Submit">Go Back</button>
 	</form>	
   
